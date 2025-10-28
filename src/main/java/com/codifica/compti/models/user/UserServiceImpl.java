@@ -46,9 +46,8 @@ public class UserServiceImpl implements UserService {
         newUser.setDocument(registerDTO.document());
         newUser.setZipCode(registerDTO.zip_code());
         newUser.setAddressComplement(registerDTO.address_complement());
-        newUser.setPhoto(registerDTO.photo());
         newUser.setSocialMediaLink(registerDTO.social_media_link());
-
+        
         return userRepository.save(newUser);
     }
 
