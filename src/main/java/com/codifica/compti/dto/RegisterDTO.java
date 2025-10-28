@@ -1,5 +1,7 @@
 package com.codifica.compti.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.codifica.compti.models.user.UserRole;
 
 import jakarta.validation.constraints.NotBlank;
@@ -37,6 +39,5 @@ public record RegisterDTO(
     String address_complement, 
     @NotBlank
     String document,
-    @NotBlank
-    String photo) {
+    MultipartFile photo) {
 }
