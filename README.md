@@ -23,7 +23,7 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/compridb
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 ```
-Execute o backend:
+Metodo 2: Execute o backend:
 1) Crie o .env na pasta: src/main/resources/;
 2) Use o .env-example, como exemplo, e preencha com suas variáveis de ambiente;
 3) Crie seu banco de dados no Postgres, com os dados correspondentes as suas variáveis de ambiente;
