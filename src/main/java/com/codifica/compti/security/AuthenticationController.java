@@ -96,6 +96,11 @@ public class AuthenticationController {
         userServiceImpl.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("get/{user_id}")
+    public ResponseEntity<User> get(@PathVariable("user_id") Long userId) {
+        return ResponseEntity.ok(userServiceImpl.view(userId));
+    }
 }
 
 
