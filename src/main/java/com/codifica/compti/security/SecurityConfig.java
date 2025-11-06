@@ -65,13 +65,19 @@ public class SecurityConfig {
                             .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
                             .requestMatchers("/favicon.ico").permitAll()
                             // Configura permissões específicas para endpoints da aplicação
-                            .requestMatchers(HttpMethod.PUT, "/api/auth/update").hasAnyRole("INDIVIDUAL", "BUSINNES")
-                            .requestMatchers(HttpMethod.DELETE, "/api/auth/delete").hasAnyRole("INDIVIDUAL", "BUSINNES")
-                            .requestMatchers(HttpMethod.GET, "/api/categories/*").hasAnyRole("INDIVIDUAL", "BUSINNES")
-                            .requestMatchers(HttpMethod.POST, "/api/products").hasAnyRole("INDIVIDUAL", "BUSINNES")
-                            .requestMatchers(HttpMethod.POST, "/api/products/user/*").hasAnyRole("INDIVIDUAL", "BUSINNES")
-                            .requestMatchers(HttpMethod.PUT, "/api/products/*").hasAnyRole( "BUSINNES")
-                            .requestMatchers(HttpMethod.DELETE, "/api/products/*").hasAnyRole( "BUSINNES")
+                            .requestMatchers(HttpMethod.PUT, "/api/auth/update").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.DELETE, "/api/auth/delete").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.GET, "/api/auth/get/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.GET, "/api/categories/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.POST, "/api/products").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.POST, "/api/products/user/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+
+                            .requestMatchers(HttpMethod.POST, "/api/favorites/user/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.DELETE, "/api/favorites/user/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.GET, "/api/favorites/user/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
+                            .requestMatchers(HttpMethod.PUT, "/api/favorites/user/**").hasAnyRole("INDIVIDUAL", "BUSINESS")
                             .anyRequest().authenticated();// Outros endpoints requerem autenticação
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -86,7 +92,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:8080", "http://localhost:8080/swagger-ui.html",
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080", "http://localhost:8080/swagger-ui.html",
                 "http://localhost:8080/favicon.ico")); // // Permitir o front-end e o Swagger UI
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Cabeçalhos permitidos

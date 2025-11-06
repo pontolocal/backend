@@ -4,11 +4,13 @@ import com.codifica.compti.models.user.User;
 import com.codifica.compti.models.user.UserRepository;
 import com.codifica.compti.models.userproduct.UserProduct;
 import com.codifica.compti.models.userproduct.UserProductRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class FavoritesServiceImpl implements FavoritesService{
 
     private final FavoritesRepository favoritesRepository;

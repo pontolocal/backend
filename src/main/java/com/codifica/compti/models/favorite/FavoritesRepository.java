@@ -1,10 +1,12 @@
 package com.codifica.compti.models.favorite;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface FavoritesRepository extends JpaRepository<Favorites, Long> {
     /**
      * Busca todos os favoritos de um usuário
