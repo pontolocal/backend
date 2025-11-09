@@ -12,11 +12,11 @@ import java.util.List;
 public class ProductCategoryDTO {
     private Long id;
     private String name;
-
+    private String imageUrl;
 
     public ProductCategoryDTO(ProductCategory category) {
         this.id = category.getId();
         this.name = category.getName();
+        this.imageUrl = category.getImageUrl();
     }
-
 }
