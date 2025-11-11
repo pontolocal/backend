@@ -21,6 +21,8 @@ public class ProductCategory {
 
     private String name;
 
+    private String imageUrl;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference("category-products")
     private List<UserProduct> products;
