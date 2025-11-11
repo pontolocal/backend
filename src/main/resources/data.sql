@@ -1,0 +1,22 @@
+INSERT INTO product_categories (id, name, image_url) VALUES
+(1, 'Restaurante', 'https://i.postimg.cc/qvqVydfq/restaurante.png'),
+(2, 'Doces', 'https://i.postimg.cc/QxXrNT0N/doces.png'),
+(3, 'Bebidas', 'https://i.postimg.cc/DzWhk35L/bebidas.png'),
+(4, 'Lanches', 'https://i.postimg.cc/ncZns5cb/lanches.png'),
+(5, 'Artesanato', 'https://i.postimg.cc/Y9WtgBW7/artesanato.png'),
+(6, 'Roupas', 'https://i.postimg.cc/66ZQ4nrZ/roupas.png'),
+(7, 'Móveis', 'https://i.postimg.cc/JhdhZQdw/moveis.png'),
+(8, 'Decoração', 'https://i.postimg.cc/vZhTHyrs/decoracao.png'),
+(9, 'Massas', 'https://i.postimg.cc/L4gJkrpn/massas.png'),
+(10, 'Tecnologia', 'https://i.postimg.cc/Bn0PnNRH/tecnologia.png'),
+(11, 'Usados', 'https://i.postimg.cc/rsRM1XRt/usados.png'),
+(12, 'Jardinagem', 'https://i.postimg.cc/Dz5vFcKh/jardinagem.png'),
+(13, 'Pet', 'https://i.postimg.cc/L5djz93K/bread.png'),
+(14, 'Beleza', 'https://i.postimg.cc/qBF7zQ6c/cosmeticos.png'),
+(15, 'Saúde', 'https://i.postimg.cc/85Kzdmyw/remedios.png'),
+(16, 'Outros', 'https://i.postimg.cc/tCL7mDXj/outros.png'),
+(17, 'Papelaria', 'https://i.postimg.cc/B6qjB6JT/papelaria.png'),
+(18, 'Livros', 'https://i.postimg.cc/wTPsYgk8/livros.png'),
+(19, 'Brinquedos', 'https://i.postimg.cc/Y0CmMSPb/brinquedo.png'),
+(20, 'Esporte', 'https://i.postimg.cc/wTKdCrsc/esportes.png');
+ON CONFLICT (id) DO NOTHING;

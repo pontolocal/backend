@@ -1,9 +1,12 @@
 package com.codifica.compti.models.sellerrating;
 
+
+
 import com.codifica.compti.models.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Entity
 @Table(name = "SellerRatings")
