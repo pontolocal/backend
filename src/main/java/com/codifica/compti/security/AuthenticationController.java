@@ -71,6 +71,7 @@ public class AuthenticationController {
         String crippass = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.login(), crippass, data.role());// Login já existe
         newUser.setName(data.name());
+        newUser.setBio(data.bio());
         newUser.setWhatsapp(data.whatsapp());
         newUser.setDocument(data.document());
         newUser.setZipCode(data.zip_code());
@@ -90,7 +91,7 @@ public class AuthenticationController {
     @PutMapping("update/{user_id}")
     public ResponseEntity<GetResponseDTO> update(@RequestBody User user, @PathVariable("user_id") Long user_id) {
        User updatedUser = userServiceImpl.update(user, user_id);
-        return ResponseEntity.ok(new GetResponseDTO(updatedUser.getEmail(),updatedUser.getName(),updatedUser.getWhatsapp(),updatedUser.getSocialMediaLink(),updatedUser.getZipCode(),updatedUser.getAddressComplement()
+        return ResponseEntity.ok(new GetResponseDTO(updatedUser.getEmail(),updatedUser.getName(),updatedUser.getBio(),updatedUser.getWhatsapp(),updatedUser.getSocialMediaLink(),updatedUser.getZipCode(),updatedUser.getAddressComplement()
         ,updatedUser.getCity(),updatedUser.getAddress(),updatedUser.getState(),updatedUser.getDocument(),updatedUser.getPhoto()));
     }
 
@@ -103,7 +104,7 @@ public class AuthenticationController {
     @GetMapping("get/{user_id}")
     public ResponseEntity<GetResponseDTO> get(@PathVariable("user_id") Long userId) {
         User getUser = userServiceImpl.view(userId);
-        return ResponseEntity.ok(new GetResponseDTO(getUser.getEmail(),getUser.getName(),getUser.getWhatsapp(),getUser.getSocialMediaLink(),getUser.getZipCode(),getUser.getAddressComplement()
+        return ResponseEntity.ok(new GetResponseDTO(getUser.getEmail(),getUser.getName(),getUser.getBio(),getUser.getWhatsapp(),getUser.getSocialMediaLink(),getUser.getZipCode(),getUser.getAddressComplement()
                 ,getUser.getCity(),getUser.getAddress(),getUser.getState(),getUser.getDocument(),getUser.getPhoto()));
     }
 }
