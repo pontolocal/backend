@@ -85,10 +85,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(new RegisterResponseDTO(newUser.getId(), newUser.getEmail()));
     }
 
+    //String login,String name, String whatsapp, String social_media_link,
+    //                             String zip_code, String address_complement, String city, String address, String state, String document, String photo
     @PutMapping("update/{user_id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable("user_id") Long user_id) {
+    public ResponseEntity<GetResponseDTO> update(@RequestBody User user, @PathVariable("user_id") Long user_id) {
        User updatedUser = userServiceImpl.update(user, user_id);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(new GetResponseDTO(updatedUser.getEmail(),updatedUser.getName(),updatedUser.getWhatsapp(),updatedUser.getSocialMediaLink(),updatedUser.getZipCode(),updatedUser.getAddressComplement()
+        ,updatedUser.getCity(),updatedUser.getAddress(),updatedUser.getState(),updatedUser.getDocument(),updatedUser.getPhoto()));
     }
 
     @DeleteMapping("delete/{user_id}")
@@ -98,8 +101,10 @@ public class AuthenticationController {
     }
 
     @GetMapping("get/{user_id}")
-    public ResponseEntity<User> get(@PathVariable("user_id") Long userId) {
-        return ResponseEntity.ok(userServiceImpl.view(userId));
+    public ResponseEntity<GetResponseDTO> get(@PathVariable("user_id") Long userId) {
+        User getUser = userServiceImpl.view(userId);
+        return ResponseEntity.ok(new GetResponseDTO(getUser.getEmail(),getUser.getName(),getUser.getWhatsapp(),getUser.getSocialMediaLink(),getUser.getZipCode(),getUser.getAddressComplement()
+                ,getUser.getCity(),getUser.getAddress(),getUser.getState(),getUser.getDocument(),getUser.getPhoto()));
     }
 }
 
