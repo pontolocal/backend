@@ -6,7 +6,12 @@ import com.codifica.compti.models.user.User;
 import com.codifica.compti.models.user.UserRepository;
 import com.codifica.compti.models.user.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -144,6 +149,51 @@ public class UserProductServiceImpl implements UserProductService {
                 .map(UserProductDTO::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public Page<UserProductDTO> searchProducts(ProductFilterDTO filters) {
+        int page = filters.getPage() != null ? filters.getPage() : 0;
+        int size = filters.getSize() != null ? filters.getSize() : 20;
+
+        Sort sort = getSortFromFilter(filters.getSortBy());
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        String city = null;
+        String state = null;
+        String zipCode = null;
+
+        if ("cidade".equals(filters.getSearchBy())) {
+            city = filters.getCity();
+            state = filters.getState();
+        } else if ("cep".equals(filters.getSearchBy())) {
+            zipCode = filters.getCep();
+        }
+
+        Page<UserProduct> productsPage = productRepository.findByFilters(
+                city, state, zipCode,
+                filters.getCategoryId(),
+                filters.getMinPrice(),
+                filters.getMaxPrice(),
+                filters.getType(),
+                filters.getSearch(),
+                pageable
+        );
+
+        return productsPage.map(UserProductDTO::new);
+    }
+
+    private Sort getSortFromFilter(String sortBy) {
+        if (sortBy == null || "relevance".equals(sortBy)) {
+            return Sort.by(Sort.Direction.DESC, "id");
+        }
+        switch (sortBy) {
+            case "price_asc": return Sort.by(Sort.Direction.ASC, "price");
+            case "price_desc": return Sort.by(Sort.Direction.DESC, "price");
+            case "recent": return Sort.by(Sort.Direction.DESC, "id");
+            default: return Sort.by(Sort.Direction.DESC, "id");
+        }
+    }
+
     }
 
 
