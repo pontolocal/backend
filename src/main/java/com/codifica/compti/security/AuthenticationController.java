@@ -104,7 +104,13 @@ public class AuthenticationController {
     @GetMapping("get/{user_id}")
     public ResponseEntity<GetResponseDTO> get(@PathVariable("user_id") Long userId) {
         User getUser = userServiceImpl.view(userId);
-        return ResponseEntity.ok(new GetResponseDTO(getUser.getEmail(),getUser.getName(),getUser.getBio(),getUser.getWhatsapp(),getUser.getSocialMediaLink(),getUser.getZipCode(),getUser.getAddressComplement()
+        int role;
+       if(getUser.getRole().equals("individual")) {
+           role = 1;
+       }else{
+           role = 2;
+       }
+        return ResponseEntity.ok(new GetResponseDTO(getUser.getEmail(),getUser.getName(),getUser.getBio(),role,getUser.getWhatsapp(),getUser.getSocialMediaLink(),getUser.getZipCode(),getUser.getAddressComplement()
                 ,getUser.getCity(),getUser.getAddress(),getUser.getState(),getUser.getDocument(),getUser.getPhoto()));
     }
 }

@@ -23,6 +23,7 @@ public class UserProductDTO {
     private String userCity;
     private String userState;
     private String userZipCode;
+    private String whatsapp;
 
     public UserProductDTO(UserProduct product) {
         this.id = product.getId();
@@ -45,6 +46,7 @@ public class UserProductDTO {
             this.userCity = product.getUser().getCity();
             this.userState = product.getUser().getState();
             this.userZipCode = product.getUser().getZipCode();
+            this.whatsapp = product.getUser().getWhatsapp();
         }
 
     }
