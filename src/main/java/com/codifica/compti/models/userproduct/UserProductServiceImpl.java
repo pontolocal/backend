@@ -187,14 +187,18 @@ public class UserProductServiceImpl implements UserProductService {
             return Sort.by(Sort.Direction.DESC, "id");
         }
         switch (sortBy) {
-            case "price_asc": return Sort.by(Sort.Direction.ASC, "price");
-            case "price_desc": return Sort.by(Sort.Direction.DESC, "price");
-            case "recent": return Sort.by(Sort.Direction.DESC, "id");
-            default: return Sort.by(Sort.Direction.DESC, "id");
+            case "price_asc":
+                return Sort.by(Sort.Direction.ASC, "price");
+            case "price_desc":
+                return Sort.by(Sort.Direction.DESC, "price");
+            case "recent":
+                return Sort.by(Sort.Direction.DESC, "id");
+            default:
+                return Sort.by(Sort.Direction.DESC, "id");
         }
     }
 
-    }
+}
 
 
 

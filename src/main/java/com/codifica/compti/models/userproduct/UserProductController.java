@@ -53,6 +53,19 @@ public class UserProductController {
         }
     }
 
+    @GetMapping("/products/")
+    public ResponseEntity<?> getAll() {
+        try {
+            return ResponseEntity.ok(userProductService.findAll());
+        } catch (IllegalArgumentException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        }
+    }
+
+
+
     @PutMapping("/products/{product_id}/user/{user_id}")
     public ResponseEntity<?> updateProduct(
             @PathVariable("product_id") Long product_id,

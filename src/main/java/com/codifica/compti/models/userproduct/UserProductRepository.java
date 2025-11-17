@@ -128,4 +128,6 @@ public interface UserProductRepository extends JpaRepository<UserProduct, Long> 
             Pageable pageable
     );
 
+    List<UserProduct> findAll();
+
 }

@@ -41,11 +41,14 @@ public class User implements UserDetails {
     /**
      * Nome de login do usuário, email.
      */
+
     private String email;
     /**
      * Senha do usuário, armazenada em formato criptografado.
      */
+
     private String password;
+
 
     private String name;
 
@@ -55,10 +58,15 @@ public class User implements UserDetails {
     private UserRole role;
     private String whatsapp;
     private String socialMediaLink;
+    @Column(name = "zip_code", length = 10, columnDefinition = "VARCHAR(10)")
     private String zipCode;
+    @Column(name = "address_complement", length = 255)
     private String addressComplement;
     private String document; // CPF ou CNPJ
+
+    @Column(name = "city", length = 100, columnDefinition = "VARCHAR(100)")
     private String city;
+    @Column(name = "state", length = 2, columnDefinition = "VARCHAR(2)")
     private String state;
 
     public String getCity() {
