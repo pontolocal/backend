@@ -1,6 +1,7 @@
 package com.codifica.compti.models.userproduct;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,19 @@ public class UserProductController {
         }
     }
 
+    @GetMapping("/products/")
+    public ResponseEntity<?> getAll() {
+        try {
+            return ResponseEntity.ok(userProductService.findAll());
+        } catch (IllegalArgumentException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        }
+    }
+
+
+
     @PutMapping("/products/{product_id}/user/{user_id}")
     public ResponseEntity<?> updateProduct(
             @PathVariable("product_id") Long product_id,
@@ -90,6 +104,27 @@ public class UserProductController {
         } catch (RuntimeException e) {
             Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+    }
+
+    @PostMapping("/products/search")
+    public ResponseEntity<?> searchProducts(@RequestBody ProductFilterDTO filters) {
+        try {
+            Page<UserProductDTO> products = userProductService.searchProducts(filters);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", products.getContent());
+            response.put("currentPage", products.getNumber());
+            response.put("totalItems", products.getTotalElements());
+            response.put("totalPages", products.getTotalPages());
+            response.put("hasNext", products.hasNext());
+            response.put("hasPrevious", products.hasPrevious());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Erro ao buscar produtos: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
     }

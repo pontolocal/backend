@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class User implements UserDetails {
     /**
      * Identificador único do usuário.
@@ -30,14 +32,23 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     /**
-     * Nome de login do usuário, pode ser tanto o cpf como email.
+     * Descrição do usuário/loja.
      */
+    private String bio;
+
+    /**
+     * Nome de login do usuário, email.
+     */
+
     private String email;
     /**
      * Senha do usuário, armazenada em formato criptografado.
      */
+
     private String password;
+
 
     private String name;
 
@@ -47,10 +58,15 @@ public class User implements UserDetails {
     private UserRole role;
     private String whatsapp;
     private String socialMediaLink;
+    @Column(name = "zip_code", length = 10, columnDefinition = "VARCHAR(10)")
     private String zipCode;
+    @Column(name = "address_complement", length = 255)
     private String addressComplement;
     private String document; // CPF ou CNPJ
+
+    @Column(name = "city", length = 100, columnDefinition = "VARCHAR(100)")
     private String city;
+    @Column(name = "state", length = 2, columnDefinition = "VARCHAR(2)")
     private String state;
 
     public String getCity() {
@@ -171,7 +187,6 @@ public class User implements UserDetails {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
 
     private String photo; // Opcional
 

@@ -71,6 +71,7 @@ public class AuthenticationController {
         String crippass = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.login(), crippass, data.role());// Login já existe
         newUser.setName(data.name());
+        newUser.setBio(data.bio());
         newUser.setWhatsapp(data.whatsapp());
         newUser.setDocument(data.document());
         newUser.setZipCode(data.zip_code());
@@ -85,10 +86,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(new RegisterResponseDTO(newUser.getId(), newUser.getEmail()));
     }
 
+    //String login,String name, String whatsapp, String social_media_link,
+    //                             String zip_code, String address_complement, String city, String address, String state, String document, String photo
     @PutMapping("update/{user_id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable("user_id") Long user_id) {
+    public ResponseEntity<GetResponseDTO> update(@RequestBody User user, @PathVariable("user_id") Long user_id) {
        User updatedUser = userServiceImpl.update(user, user_id);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(new GetResponseDTO(updatedUser.getEmail(),updatedUser.getName(),updatedUser.getBio(),updatedUser.getWhatsapp(),updatedUser.getSocialMediaLink(),updatedUser.getZipCode(),updatedUser.getAddressComplement()
+        ,updatedUser.getCity(),updatedUser.getAddress(),updatedUser.getState(),updatedUser.getDocument(),updatedUser.getPhoto()));
     }
 
     @DeleteMapping("delete/{user_id}")
@@ -98,8 +102,16 @@ public class AuthenticationController {
     }
 
     @GetMapping("get/{user_id}")
-    public ResponseEntity<User> get(@PathVariable("user_id") Long userId) {
-        return ResponseEntity.ok(userServiceImpl.view(userId));
+    public ResponseEntity<GetUserResponseDTO> get(@PathVariable("user_id") Long userId) {
+        User getUser = userServiceImpl.view(userId);
+        int role;
+       if(getUser.getRole().equals("individual")) {
+           role = 1;
+       }else{
+           role = 2;
+       }
+        return ResponseEntity.ok(new GetUserResponseDTO(getUser.getEmail(),getUser.getName(),getUser.getBio(),role,getUser.getWhatsapp(),getUser.getSocialMediaLink(),getUser.getZipCode(),getUser.getAddressComplement()
+                ,getUser.getCity(),getUser.getAddress(),getUser.getState(),getUser.getDocument(),getUser.getPhoto()));
     }
 }
 

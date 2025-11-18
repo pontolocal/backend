@@ -1,5 +1,7 @@
 package com.codifica.compti.models.userproduct;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -104,5 +106,28 @@ public interface UserProductRepository extends JpaRepository<UserProduct, Long> 
      * @return Lista de produtos
      */
     List<UserProduct> findByUserIdAndCategoryId(Long userId, Long categoryId);
+
+    @Query("SELECT p FROM UserProduct p WHERE " +
+            "(:city IS NULL OR LOWER(p.user.city) = LOWER(:city)) AND " +
+            "(:state IS NULL OR LOWER(p.user.state) = LOWER(:state)) AND " +
+            "(:zipCode IS NULL OR p.user.zipCode = :zipCode) AND " +
+            "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
+            "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
+            "(:maxPrice IS NULL OR p.price <= :maxPrice) AND " +
+            "(:type IS NULL OR p.type = :type) AND " +
+            "(:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%')))")
+    Page<UserProduct> findByFilters(
+            @Param("city") String city,
+            @Param("state") String state,
+            @Param("zipCode") String zipCode,
+            @Param("categoryId") Long categoryId,
+            @Param("minPrice") Double minPrice,
+            @Param("maxPrice") Double maxPrice,
+            @Param("type") Boolean type,
+            @Param("search") String search,
+            Pageable pageable
+    );
+
+    List<UserProduct> findAll();
 
 }
